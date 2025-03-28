@@ -7,32 +7,40 @@ namespace ConsoleApp1
     {
         static void Main(string[] args)
         {
-            BigInteger n = f(2000000000);
-            Console.WriteLine(n);
+            try
+            {
+                int n = 2000000; // Modify this value as needed
+                BigInteger result = CalculateFibonacci(n);
+                Console.WriteLine($"The {n}th Fibonacci number is: {result}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+            }
             Console.ReadKey();
         }
-        public static BigInteger f(int i)
+
+        public static BigInteger CalculateFibonacci(int i)
         {
-            if (i == 0)
+            if (i < 0)
             {
-                return 0;
+                throw new ArgumentException("Input must be a non-negative integer.");
             }
-            if (i == 1)
-            {
-                return 1;
-            }
-            //return f(i - 1) + f(i - 2);
-            BigInteger a = 0;
-            BigInteger b = 1;
-            BigInteger c = 0;
+
+            if (i == 0) return 0;
+            if (i == 1) return 1;
+
+            BigInteger previous = 0;
+            BigInteger current = 1;
+
             for (int n = 2; n <= i; ++n)
             {
-                c = a + b;
-                a = b;
-                b = c;
+                BigInteger nextNumber = previous + current;
+                previous = current;
+                current = nextNumber;
             }
-            return c;
 
+            return current;
         }
     }
 }
